@@ -72,3 +72,44 @@
         </div>
     </div>
 
+
+
+    <script>
+        // ==== Bagian JavaScript untuk mengambil data dari WeatherAPI ====
+
+        async function getWeather() {
+            // Ambil nilai lokasi dari input
+            const lokasi = document.getElementById("lokasi").value;
+
+            // Ganti dengan API key kamu sendiri dari https://www.weatherapi.com/
+            const apiKey = "a7e7ae393d0e4e4a80620824250710";
+
+            // URL untuk request data cuaca
+            // Parameter q = lokasi yang diketik oleh user
+            const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lokasi}&aqi=no`;
+
+            try {
+                // Mengambil data dari API
+                const response = await fetch(url);
+
+                // Mengubah hasil response menjadi format JSON
+                const data = await response.json();
+
+                // Menampilkan hasil ke dalam elemen HTML
+                document.getElementById("negara").innerText = data.location.country; // negara
+                document.getElementById("provinsi").innerText = data.location.region; // provinsi
+                document.getElementById("kecamatan").innerText = data.location.name; // kota/kecamatan
+                document.getElementById("suhu").innerText = data.current.temp_c; // suhu dalam Celcius
+                document.getElementById("longitude").innerText = data.location.lon; // koordinat bujur
+                document.getElementById("latitude").innerText = data.location.lat; // koordinat lintang
+
+            } catch (error) {
+                // Jika terjadi error (misal lokasi tidak ditemukan)
+                alert("Lokasi tidak ditemukan atau terjadi kesalahan.");
+                console.error(error);
+            }
+        }
+    </script>
+
+</body>
+</html>
